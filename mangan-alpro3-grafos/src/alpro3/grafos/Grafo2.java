@@ -144,7 +144,7 @@ public class Grafo2 {
 	 * de cada nodo do grafo (linhas 5 e 6 do DFS foram removidas).
 	 *  
 	 * @param u
-	 * @return
+	 * @return lista
 	 */
 	public List<Integer> profundidade(int u) {
 		reset(u);
