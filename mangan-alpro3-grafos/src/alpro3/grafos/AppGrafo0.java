@@ -3,7 +3,6 @@ package alpro3.grafos;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Arrays;
 
 public class AppGrafo0 {
 
@@ -15,16 +14,19 @@ public class AppGrafo0 {
 		else {
 			grafo = loadFile(argc[0]);
 			grafo.mostra();
-
-			System.out.printf("largura(%d): %s\n", 2, grafo.largura(2));
+			/*
+			 * System.out.printf("largura(%d): %s\n", 2, grafo.largura(2));
+			 * System.out.println(grafo.getUltimaBusca());
+			 * 
+			 * 
+			 * System.out.printf("largura(%d): %s\n", 3, grafo.largura(3));
+			 * System.out.printf("largura(%d): %s\n", 5, grafo.largura(5));
+			 */
+			System.out.printf("\nprofundidade(%d): %s\n", 1,
+					grafo.profundidade(1));
 			System.out.println(grafo.getUltimaBusca());
 
 			/*
-			 * System.out.printf("largura(%d): %s\n", 3, grafo.largura(3));
-			 * System.out.printf("largura(%d): %s\n", 5, grafo.largura(5));
-			 * 
-			 * System.out.printf("\nprofundidade(%d): %s\n", 1,
-			 * grafo.profundidade(1));
 			 * System.out.printf("profundidade(%d): %s\n", 3,
 			 * grafo.profundidade(3));
 			 * System.out.printf("profundidade(%d): %s\n", 5,
