@@ -125,16 +125,43 @@ public class Grafo2 {
 		return ads;
 	}
 
+	private int time;
+	
 	/**
+	 * Realiza percurso em profundidade a partir
+	 * do nodo <code>u</code>.
 	 * 
-	 * @param nodo
+	 * Adaptação do código do livro Cormen et alli.
+	 * Nesta implementação, o percurso é realizado
+	 * apenas a partir do nodo <code>u</code>.
+	 * No livro, o percurso é realizado a partir
+	 * de cada nodo do grafo (linhas 5 e 6 do DFS foram removidas).
+	 *  
+	 * @param u
 	 * @return
 	 */
-	public List<Integer> profundidade(int s) {
-		reset(s);
+	public List<Integer> profundidade(int u) {
+		reset(u);
+		time = 0;
+		
+		return dfsVisit(u);
+		
+	}
+
+	/**
+	 * 
+	 * @param u
+	 * @return
+	 */
+	private List<Integer> dfsVisit(int u) {
+		
+		color[u] = GRAY;
+		time++;
+		d[u] = time;
 		
 		return null;
 	}
+
 
 }
 
