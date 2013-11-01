@@ -63,7 +63,10 @@ public class Grafo2 {
 
 	int color[];
 	int d[];
+	int f[];
 	int p[];
+	List<Integer> caminho ;
+	
 	
 	public String getUltimaBusca() {
 		return Arrays.toString(color) + "\n"
@@ -72,7 +75,7 @@ public class Grafo2 {
 	}
 
 	public List<Integer> largura(int s) {
-		List<Integer> caminho = new ArrayList<Integer>();
+		//List<Integer> caminho = new ArrayList<Integer>();
 
 		reset(s);
 		color[s] = GRAY;
@@ -102,12 +105,15 @@ public class Grafo2 {
 	private void reset(int s) {
 		color = new int[adj.length];
 		d = new int[adj.length];
+		f = new int[adj.length];
 		p = new int[adj.length];
-
+		caminho = new ArrayList<Integer>();
+		
 		for (int u = 1; u < adj.length; u++) {
 			if (u != s) {
 				color[u] = WHITE;
 				d[u] = INFINITY;
+				f[u] = INFINITY;
 				p[u] = NIL;
 			}
 		}
@@ -143,9 +149,8 @@ public class Grafo2 {
 	public List<Integer> profundidade(int u) {
 		reset(u);
 		time = 0;
-		
-		return dfsVisit(u);
-		
+		dfsVisit(u);
+		return caminho;
 	}
 
 	/**
@@ -153,13 +158,20 @@ public class Grafo2 {
 	 * @param u
 	 * @return
 	 */
-	private List<Integer> dfsVisit(int u) {
-		
+	private void dfsVisit(int u) {
 		color[u] = GRAY;
+		caminho.add(u);
 		time++;
 		d[u] = time;
-		
-		return null;
+		for (Integer v : getAdj(u)) {
+			if (color[v] == WHITE) {
+				p[v] = u;
+				dfsVisit(v);
+			}
+		}
+		color[u] = BLACK;	
+		time++;
+		f[u] = time;
 	}
 
 
