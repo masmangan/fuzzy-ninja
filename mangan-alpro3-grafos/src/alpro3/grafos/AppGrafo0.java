@@ -7,7 +7,7 @@ import java.io.IOException;
 public class AppGrafo0 {
 
 	public static void main(String[] argc) {
-		Grafo2 grafo = null;
+		Grafo3 grafo = null;
 
 		if (argc.length < 1)
 			System.out.println("uso: java Grafo0 <arquivo>");
@@ -35,15 +35,15 @@ public class AppGrafo0 {
 		}
 	}
 
-	public static Grafo2 loadFile(String filename) {
-		Grafo2 g = null;
+	public static Grafo3 loadFile(String filename) {
+		Grafo3 g = null;
 		String linha;
 
 		try {
 			BufferedReader buff = new BufferedReader(new FileReader(filename));
 			try {
 				linha = buff.readLine();
-				g = new Grafo2(Integer.parseInt(linha));
+				g = new Grafo3(Integer.parseInt(linha));
 				linha = buff.readLine();
 				while (linha != null) {
 					String[] dados = linha.split(" ");

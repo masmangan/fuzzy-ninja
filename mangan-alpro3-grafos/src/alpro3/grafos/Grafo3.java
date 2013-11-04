@@ -9,9 +9,9 @@ import java.util.Queue;
 /**
  * 
  * @author marco.mangan@pucrs.br
- *
+ * 
  */
-public class Grafo2 {
+public class Grafo3 {
 
 	private int[][] adj;
 
@@ -19,7 +19,7 @@ public class Grafo2 {
 	 * 
 	 * @param nodos
 	 */
-	public Grafo2(int nodos) {
+	public Grafo3(int nodos) {
 		if (nodos < 1) {
 			throw new IllegalArgumentException(
 					"O número de nodos deve ser maior do que zero.");
@@ -58,6 +58,7 @@ public class Grafo2 {
 	private static int WHITE = 10;
 	private static int GRAY = 20;
 	private static int BLACK = 30;
+
 	private static int INFINITY = -1;
 	private static int NIL = -1;
 
@@ -65,19 +66,17 @@ public class Grafo2 {
 	int d[];
 	int f[];
 	int p[];
-	List<Integer> caminho ;
-	
-	
+	List<Integer> caminho;
+
 	public String getUltimaBusca() {
-		return Arrays.toString(color) + "\n"
-				+ Arrays.toString(d) + "\n"
-				+ Arrays.toString(p);		
+		return Arrays.toString(color) + "\n" + Arrays.toString(d) + "\n"
+				+ Arrays.toString(p);
 	}
 
 	public List<Integer> largura(int s) {
-		//List<Integer> caminho = new ArrayList<Integer>();
 
 		reset(s);
+
 		color[s] = GRAY;
 		caminho.add(s);
 		d[s] = 0;
@@ -87,7 +86,7 @@ public class Grafo2 {
 		Q.add(s);
 		while (!Q.isEmpty()) {
 			int u = Q.peek();
-			for (Integer v : getAdj(u)) {
+			for (Integer v : getAdjacentes(u)) {
 				if (color[v] == WHITE) {
 					color[v] = GRAY;
 					caminho.add(v);
@@ -108,7 +107,7 @@ public class Grafo2 {
 		f = new int[adj.length];
 		p = new int[adj.length];
 		caminho = new ArrayList<Integer>();
-		
+
 		for (int u = 1; u < adj.length; u++) {
 			if (u != s) {
 				color[u] = WHITE;
@@ -119,30 +118,41 @@ public class Grafo2 {
 		}
 	}
 
-	private List<Integer> getAdj(int u) {
+	private List<Integer> getAdjacentes(int u) {
 		List<Integer> ads = new ArrayList<Integer>();
-		
+
 		for (int v = 0; v < adj[u].length; v++) {
 			if (adj[u][v] != 0) {
 				ads.add(v);
 			}
 		}
-		
+
 		return ads;
 	}
 
+	private List<Integer> getIncidentes(int u) {
+		List<Integer> inc = new ArrayList<Integer>();
+
+		for (int v = 0; v < adj[u].length; v++) {
+			if (adj[v][u] != 0) {
+				inc.add(v);
+			}
+		}
+
+		return inc;
+
+	}
+
 	private int time;
-	
+
 	/**
-	 * Realiza percurso em profundidade a partir
-	 * do nodo <code>u</code>.
+	 * Realiza percurso em profundidade a partir do nodo <code>u</code>.
 	 * 
-	 * Adaptação do código do livro Cormen et alli.
-	 * Nesta implementação, o percurso é realizado
-	 * apenas a partir do nodo <code>u</code>.
-	 * No livro, o percurso é realizado a partir
-	 * de cada nodo do grafo (linhas 5 e 6 do DFS foram removidas).
-	 *  
+	 * Adaptação do código do livro Cormen et alli. Nesta implementação, o
+	 * percurso é realizado apenas a partir do nodo <code>u</code>. No livro, o
+	 * percurso é realizado a partir de cada nodo do grafo (linhas 5 e 6 do DFS
+	 * foram removidas).
+	 * 
 	 * @param u
 	 * @return lista
 	 */
@@ -163,32 +173,51 @@ public class Grafo2 {
 		caminho.add(u);
 		time++;
 		d[u] = time;
-		for (Integer v : getAdj(u)) {
+		for (Integer v : getAdjacentes(u)) {
 			if (color[v] == WHITE) {
 				p[v] = u;
 				dfsVisit(v);
 			}
 		}
-		color[u] = BLACK;	
+		color[u] = BLACK;
 		time++;
 		f[u] = time;
 	}
 
+	public boolean isFonte(int n) {
+		return getGrauEntrada(n) == 0 && getGrauSaida(n) > 0;
+	}
+
+	public boolean isSumidouro(int n) {
+		return getGrauSaida(n) == 0 && getGrauEntrada(n) > 0;
+	}
+
+	public int getGrauSaida(int n) {
+		return getAdjacentes(n).size();
+	}
+
+	public int getGrauEntrada(int n) {
+		return getIncidentes(n).size();
+	}
+
+	public List<Integer> getFontes() {
+		List<Integer> r = new ArrayList<Integer>();
+		for (int i = 0; i < adj.length; i++) {
+			if (isFonte(i)) {
+				r.add(i);
+			}
+		}
+		return r;
+	}
+
+	public List<Integer> getSumidouros() {
+		List<Integer> r = new ArrayList<Integer>();
+		for (int i = 0; i < adj.length; i++) {
+			if (isSumidouro(i)) {
+				r.add(i);
+			}
+		}
+		return r;
+	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
